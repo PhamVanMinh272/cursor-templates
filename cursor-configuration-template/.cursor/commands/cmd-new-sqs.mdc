@@ -1,0 +1,13 @@
+---
+description: Kích hoạt khi người dùng gõ /new-sqs để tạo một file Lambda Handler mới xử lý SQS Trigger
+globs: src/handlers/**/*.py
+alwaysApply: false
+---
+
+# Lệnh /new-sqs: Tạo SQS Trigger Handler
+
+Khi người dùng gọi lệnh này, Agent hãy thực hiện các bước sau:
+1. Tạo một file Python mới chịu trách nhiệm nhận Event từ SQS Queue.
+2. Viết vòng lặp `for record in event['Records']` để duyệt qua từng message.
+3. Đảm bảo bọc khối `try/catch` riêng cho từng record bên trong vòng lặp để một message lỗi không làm hỏng cả Batch.
+4. Tích hợp cấu trúc trả về `batchItemFailures` nếu có message xử lý thất bại.

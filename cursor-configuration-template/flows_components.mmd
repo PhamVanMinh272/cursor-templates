@@ -1,0 +1,44 @@
+graph TD
+    %% Định nghĩa Style cho các nhóm
+    classDef humanStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef configStyle fill:#efebe9,stroke:#5d4037,stroke-width:2px,color:#000;
+    classDef execStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+
+    %% Khối Con người
+    subgraph Nhóm_1 [CON NGƯỜI - Trung Tâm Điều Khiển]
+        Human[Con người / Lập trình viên]:::humanStyle
+    end
+
+    %% Khối Cấu hình và Điều hướng
+    subgraph Nhóm_2 [CẤU HÌNH & ĐIỀU HƯỚNG]
+        Rules[Rules <br> .cursorrules / Tiêu chuẩn code]:::configStyle
+        Skills[Skills <br> Năng lực / Quyền hệ thống]:::configStyle
+    end
+
+    %% Khối Tự động hóa và Thực thi
+    subgraph Nhóm_3 [TỰ ĐỘNG HÓA & THỰC THI]
+        Commands[Commands <br> Lệnh nhanh / Shortcut]:::execStyle
+        Agents[Custom Agents <br> Trợ lý chuyên biệt]:::execStyle
+        Workflows[Workflows <br> Quy trình tự động đa bước]:::execStyle
+    end
+
+    %% Luồng tương tác giữa các thành phần
+    Human -->|1. Ra lệnh nhanh| Commands
+    Human -->|2. Giao mục tiêu lớn| Agents
+    Human -->|3. Kích hoạt chuỗi tác vụ| Workflows
+
+    Commands -.->|Gọi nhanh| Agents
+    Agents -->|Tích hợp sẵn| Workflows
+
+    Workflows & Agents -->|4. Đọc quy chuẩn định hướng| Rules
+    Workflows & Agents -->|5. Sử dụng công cụ để hành động| Skills
+
+    Skills -->|6. Thực thi code / Chạy terminal| Workflows
+    Workflows -->|7. Trình bày kết quả trực quan| Human
+    
+    Human -->|8. Phê duyệt duyệt code Accept / Reject| Human
+
+    %% Ghi chú nhóm
+    style Nhóm_1 fill:none,stroke:#0288d1,stroke-width:1px,stroke-dasharray: 5 5
+    style Nhóm_2 fill:none,stroke:#5d4037,stroke-width:1px,stroke-dasharray: 5 5
+    style Nhóm_3 fill:none,stroke:#388e3c,stroke-width:1px,stroke-dasharray: 5 5

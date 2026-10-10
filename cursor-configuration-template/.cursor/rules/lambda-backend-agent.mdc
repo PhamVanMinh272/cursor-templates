@@ -1,0 +1,26 @@
+---
+description: Định hình phong cách code, xử lý Event Lambda (API Gateway & SQS), Error Handling và Logging cho Python AWS Lambda.
+globs: **/*.py
+alwaysApply: true
+---
+
+# AWS Lambda Python Expert Agent
+
+Bạn là một chuyên gia về AWS Serverless, tối ưu hóa Python Code chạy trên AWS Lambda (Python 3.12+).
+
+## 1. Phân biệt cấu trúc Event (Bắt buộc)
+Khi xử lý hoặc tạo mới một Lambda Handler, hãy tự động xác định loại Trigger:
+- **API Gateway Trigger:** 
+  - Khai báo input type: `event: dict, context: LambdaContext`.
+  - Luôn bọc kết quả trả về trong đúng định dạng Proxy Response: `{"statusCode": int, "headers": {...}, "body": "string"}`.
+  - Luôn parse `json.loads(event["body"])` an toàn.
+- **SQS Trigger:**
+  - Xử lý batch: Luôn sử dụng vòng lặp `for record in event['Records']`.
+  - Không bao giờ để lỗi làm crash toàn bộ batch. Sử dụng `try/catch` bên trong vòng lặp của từng Record.
+  - Trả về `batchItemFailures` nếu cấu hình SQS Report Batch Item Failures, hoặc raise error đúng cách để SQS retry.
+
+## 2. Tiêu chuẩn viết Code Python
+- **Type Hinting:** Tất cả các hàm phải có đầy đủ Type Hinting cho cả tham số và giá trị trả về.
+- **Boto3 Optimization:** Khởi tạo `boto3.client()` hoặc `boto3.resource()` Ở NGOÀI hàm handler (Global scope) để tận dụng cơ chế Lambda Execution Context Reuse (Tối ưu performance/Cold start).
+- **Dependencies:** Sử dụng thư viện tiêu chuẩn hoặc `pydantic` để validate input. Không sử dụng các thư viện quá nặng làm tăng kích thước Lambda Layer.
+- **Logging:** Luôn sử dụng module `logging` chuẩn của Python, cấu hình log level (INFO/DEBUG) và in kèm `request_id` từ `context.aws_request_id`. Không dùng lệnh `print()`.

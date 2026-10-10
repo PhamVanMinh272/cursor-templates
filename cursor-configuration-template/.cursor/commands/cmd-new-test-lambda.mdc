@@ -1,0 +1,13 @@
+---
+description: Kích hoạt khi người dùng gõ /test-lambda để viết Unit Test cho file Lambda hiện tại
+globs: src/tests/**/*.py
+alwaysApply: false
+---
+
+# Lệnh /test-lambda: Viết Unit Test bằng Moto
+
+Khi người dùng gọi lệnh này, Agent hãy thực hiện các bước sau:
+1. Đọc hiểu file Lambda mà người dùng đang mở hoặc đang chọn.
+2. Tạo một file test tương ứng trong thư mục `src/tests/` (ví dụ: `test_auth.py`).
+3. Sử dụng thư viện `pytest` và `moto` để mock các dịch vụ AWS liên quan (như SQS, DynamoDB).
+4. Tạo sẵn các fixture dữ liệu mẫu (Mock Event) giả lập API Gateway hoặc SQS Record để truyền vào hàm Handler.

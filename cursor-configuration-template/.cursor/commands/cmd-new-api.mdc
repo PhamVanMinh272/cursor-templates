@@ -1,0 +1,15 @@
+---
+description: Kích hoạt khi người dùng gõ /new-api để tạo một file Lambda Handler mới xử lý API Gateway
+globs: src/handlers/**/*.py
+alwaysApply: false
+---
+
+# Lệnh /new-api: Tạo API Gateway Handler
+
+Khi người dùng gọi lệnh này, Agent hãy thực hiện các bước sau:
+1. Hỏi người dùng về tên API và các tham số đầu vào (nếu chưa có).
+2. Tạo một file Python mới trong thư mục `src/handlers/`.
+3. Cấu hình file theo chuẩn API Gateway Proxy Response:
+   - Sử dụng `pydantic` để định nghĩa và validate Request Body.
+   - Bọc toàn bộ logic trong khối `try/catch`.
+   - Trả về dictionary có cấu trúc: `{"statusCode": 200, "headers": {"Content-Type": "application/json"}, "body": "..."}`.
